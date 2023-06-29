@@ -10,7 +10,14 @@ const Home = () => {
     try {
       await axios.post("http://localhost:3000", {
         msg,
-      });
+      })
+      .then((res)=> {
+        console.log(res)
+      }
+        )
+      .catch((e)=> {
+        console.log(e)
+      })
     } catch (e) {
       console.log(e);
     }
