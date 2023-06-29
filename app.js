@@ -6,16 +6,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-app.get("/", cors(), (req, res) => {});
+//app.get("/", cors(), (req, res) => {});
 
 app.post("/", async (req, res) => {
   const { msg } = req.body;
 
-  const data = {
-    msg: msg,
-  };
+  const newData = new collection({msg})
 
-  await collection.insertMany([data]);
+  try {
+    await newData.save();
+    res.status(201).json({ message: "Data stored successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "An error occurred while storing the data" });
+  }
 });
 
 app.listen(3000, () => {
